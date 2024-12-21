@@ -16,21 +16,33 @@ print("end")
 
 transitionExp = transitionMatrix
 for i in range(4):
-    print(i)
     transitionExp = np.matmul(transitionExp,transitionMatrix)
 
 print("Matrix: \n", transitionExp, "\n")
 
 nIterDist = np.matmul(startingDistribution, transitionExp)
 print(nIterDist)
-stable = np.matmul(startingDistribution, transitionExp)
-print("Stable: ", stable)
-randomStart = np.array([0.1, 0.9, 0.0]) 
-stable2 = np.matmul(randomStart, transitionExp)
-print("Stable: ", stable2)
+
+
+stableAfterMany = transitionMatrix
+for i in range(10000):
+    stableAfterMany = np.matmul(stableAfterMany, transitionMatrix)
+
+print("Stable Matrix after 10000 Iterations: \n", stableAfterMany, "\n")
+
 
 stableMatrix = startingDistribution
-for i in range(90):
+tresholdReached = False
+iter = 0
+while not tresholdReached:
+    prevMatrix = stableMatrix
+    iter = iter + 1
     stableMatrix = np.matmul(stableMatrix, transitionMatrix)
+    diff = np.subtract(prevMatrix, stableMatrix)
+    absDiff = np.array([abs(x) for x in diff]) 
+    sumAbsDiff = np.sum(absDiff)
+    if sumAbsDiff < 0.00000001:
+        tresholdReached = True
 
-print(stableMatrix)
+print("Stable: \n",stableMatrix, "\n")
+print("Iterations to Treshold Reached: ", iter)
