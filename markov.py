@@ -32,9 +32,9 @@ print("Stable Matrix after 10000 Iterations: \n", stableAfterMany, "\n")
 
 
 stableMatrix = startingDistribution
-tresholdReached = False
+thresholdReached = False
 iter = 0
-while not tresholdReached:
+while not thresholdReached:
     prevMatrix = stableMatrix
     iter = iter + 1
     stableMatrix = np.matmul(stableMatrix, transitionMatrix)
@@ -42,7 +42,7 @@ while not tresholdReached:
     absDiff = np.array([abs(x) for x in diff]) 
     sumAbsDiff = np.sum(absDiff)
     if sumAbsDiff < 0.00000001:
-        tresholdReached = True
+        thresholdReached = True
 
 print("Stable: \n",stableMatrix, "\n")
-print("Iterations to Treshold Reached: ", iter)
+print("Iterations to Threshold Reached: ", iter)
